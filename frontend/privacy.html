@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy & Settings – JOBNEX</title>
+  <meta name="description" content="Manage your candidate profile privacy, recruiter visibility, contact preferences, and local data settings.">
+  <link rel="stylesheet" href="common.css">
+</head>
+<body data-page="privacy">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main" class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header-text">
+        <h1>Privacy & Candidate Settings</h1>
+        <p>Control recruiter visibility, contact obfuscation, and data retention preferences for your candidate profile.</p>
+      </div>
+      <div class="page-actions">
+        <button type="button" class="btn" id="save-privacy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Preferences
+        </button>
+      </div>
+    </div>
+
+    <!-- Callout Banner -->
+    <div class="callout callout-demo" role="note">
+      <span class="callout-icon">ℹ️</span>
+      <div>
+        <strong>Local Persistence Notice:</strong> Preferences are stored within your browser's persistent session storage. In production, these settings enforce server-side access control lists and recruiter discovery filters.
+      </div>
+    </div>
+
+    <form id="privacy-form">
+      <div class="grid-2">
+        <!-- Resume Visibility Section -->
+        <fieldset class="card" aria-labelledby="vis-heading">
+          <div class="card-header">
+            <h2 id="vis-heading">Resume Visibility & Discovery</h2>
+            <span class="badge badge-neutral">Discovery</span>
+          </div>
+          <p class="text-sm text-muted">Determine how your candidate profile appears to talent recruiters in search results.</p>
+
+          <label class="privacy-radio-card" for="vis-private">
+            <input type="radio" id="vis-private" name="resume-visibility" value="private" checked>
+            <div class="privacy-radio-text">
+              <strong>Private (Restricted)</strong>
+              <span>Only you and organizations you explicitly queue an application to can view your resume details.</span>
+            </div>
+          </label>
+
+          <label class="privacy-radio-card" for="vis-public">
+            <input type="radio" id="vis-public" name="resume-visibility" value="public">
+            <div class="privacy-radio-text">
+              <strong>Public (Open to Recruiters)</strong>
+              <span>Verified recruiters and talent acquisition partners can discover your profile based on skill matching.</span>
+            </div>
+          </label>
+        </fieldset>
+
+        <!-- Contact & Downloads Section -->
+        <fieldset class="card" aria-labelledby="contact-heading">
+          <div class="card-header">
+            <h2 id="contact-heading">Contact Details & File Permissions</h2>
+            <span class="badge badge-neutral">Obfuscation</span>
+          </div>
+          <p class="text-sm text-muted">Configure how sensitive contact metadata is shared during initial recruiter screenings.</p>
+
+          <div class="switch-row">
+            <div class="switch-info">
+              <strong>Obfuscate Email Address</strong>
+              <span>Display a masked proxy address until an interview is formally accepted.</span>
+            </div>
+            <label class="switch-control" for="hide-email">
+              <input type="checkbox" id="hide-email" name="hide-email">
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+          <div class="switch-row">
+            <div class="switch-info">
+              <strong>Mask Phone Number</strong>
+              <span>Conceal your primary phone number from unverified recruiters.</span>
+            </div>
+            <label class="switch-control" for="hide-phone">
+              <input type="checkbox" id="hide-phone" name="hide-phone" checked>
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+          <div class="switch-row">
+            <div class="switch-info">
+              <strong>Allow Direct PDF Resume Download</strong>
+              <span>Permit recruiters with direct job matches to download your formatted PDF resume.</span>
+            </div>
+            <label class="switch-control" for="allow-download">
+              <input type="checkbox" id="allow-download" name="allow-download" checked>
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Data Governance Section -->
+      <section class="card" aria-labelledby="data-gov-heading" style="margin-top: 8px;">
+        <div class="card-header">
+          <h2 id="data-gov-heading">Candidate Data Governance & Backup</h2>
+          <span class="badge badge-neutral">Management</span>
+        </div>
+        <p class="text-sm text-muted">Manage your locally stored demo data, application histories, and profile backups.</p>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+          <button type="button" class="btn btn-secondary" id="export-data">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export Candidate Data (JSON)
+          </button>
+          <button type="button" class="btn btn-danger" id="reset-demo-data">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Reset Local Demo Data
+          </button>
+        </div>
+      </section>
+    </form>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="api.js"></script>
+  <script src="common.js"></script>
+</body>
+</html>

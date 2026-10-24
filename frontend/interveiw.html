@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Prep – JOBNEX</title>
+  <meta name="description" content="Structured interview preparation workspace. Practice Technical, Behavioral, HR, and System Design interview questions with model answers.">
+  <link rel="stylesheet" href="common.css">
+</head>
+<body data-page="interview">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main" class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header-text">
+        <h1>Interview Preparation</h1>
+        <p>Master technical, behavioral, and architectural interviews with structured answer frameworks.</p>
+      </div>
+      <div class="page-actions">
+        <button type="button" class="btn" id="generate-questions">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Rapid Practice Drill
+        </button>
+      </div>
+    </div>
+
+    <!-- Practice Progress Banner -->
+    <div class="progress-banner">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 1.25rem;">🎯</span>
+        <div>
+          <strong id="practice-progress-text">0 of 17 Questions Practiced (0%)</strong>
+          <div class="text-xs text-muted">Track your preparation across Technical, Behavioral, and System Design categories.</div>
+        </div>
+      </div>
+      <div style="width: 140px; height: 8px; background: rgba(0,0,0,0.08); border-radius: 99px; overflow: hidden;">
+        <div id="practice-progress-bar" style="width: 0%; height: 100%; background: var(--brand-green); transition: width 0.3s ease;"></div>
+      </div>
+    </div>
+
+    <!-- Category Tabs Navigation -->
+    <div class="tabs-nav" role="tablist" aria-label="Question Categories">
+      <button type="button" class="tab-btn" role="tab" data-cat="technical" aria-selected="true">
+        💻 Technical Engineering
+      </button>
+      <button type="button" class="tab-btn" role="tab" data-cat="behavioral" aria-selected="false">
+        🤝 Behavioral & STAR
+      </button>
+      <button type="button" class="tab-btn" role="tab" data-cat="hr" aria-selected="false">
+        👔 HR & Leadership
+      </button>
+      <button type="button" class="tab-btn" role="tab" data-cat="system" aria-selected="false">
+        📐 System Design & Arch
+      </button>
+    </div>
+
+    <!-- Filters & Search Bar -->
+    <div class="card" style="margin-bottom: 24px; padding: 16px 20px;">
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;">
+        <div>
+          <label for="search-questions" class="visually-hidden">Search questions</label>
+          <input
+            type="search"
+            id="search-questions"
+            placeholder="Search questions or keywords (e.g. debugging, STAR, scalability, validation)…"
+            autocomplete="off"
+            style="min-height: 38px;"
+          >
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <label for="filter-difficulty" class="text-sm" style="margin: 0; white-space: nowrap;">Difficulty:</label>
+          <select id="filter-difficulty" style="min-height: 38px; min-width: 150px;">
+            <option value="all">All Difficulties</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Feed Container -->
+    <section id="interview-questions" aria-label="Interview Questions Feed" aria-live="polite">
+      <!-- Injected by common.js -->
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="api.js"></script>
+  <script src="common.js"></script>
+</body>
+</html>

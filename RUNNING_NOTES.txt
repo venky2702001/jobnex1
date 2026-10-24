@@ -1,0 +1,25 @@
+JOBNEX - how to run (backend + frontend together)
+=================================================
+
+1. Install packages (Python 3.10+):
+       python -m venv .venv
+       .venv\Scripts\activate          (Windows)   |   source .venv/bin/activate  (Mac/Linux)
+       pip install -r requirements.txt
+
+2. Create the MySQL database once:
+       CREATE DATABASE jobnex CHARACTER SET utf8mb4;
+
+3. Put your secrets in .env (project root, never commit it):
+       DB_PASSWORD=your-mysql-password      (DB_USER/DB_HOST/DB_PORT/DB_NAME have defaults)
+       SESSION_SECRET_KEY=<python -c "import secrets; print(secrets.token_urlsafe(32))">
+       ANTHROPIC_API_KEY=...                (optional: AI chat + AI interview questions)
+
+4. Start the server:
+       cd backend
+       uvicorn main:app --reload
+
+5. Open  http://127.0.0.1:8000/   (NOT the html file by double-click: the API and the pages
+   must share one origin so the login cookie works).
+   API docs: http://127.0.0.1:8000/docs
+
+6. Tests:  cd backend && pytest        (set DB_NAME to a scratch database for the integration tests)

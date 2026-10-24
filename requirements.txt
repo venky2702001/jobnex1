@@ -1,0 +1,25 @@
+# --- Web framework ---------------------------------------------------------
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+starlette>=0.27.0
+pydantic>=2.0.0
+itsdangerous>=2.2.0        # signs the session cookie (SessionMiddleware)
+
+# --- Database --------------------------------------------------------------
+sqlalchemy>=2.0            # code uses 2.0-style Mapped[]/DeclarativeBase; 1.x will not work
+mysql-connector-python>=8.0.0
+
+# --- Config ----------------------------------------------------------------
+python-dotenv>=1.0.0       # loads .env (database.py)  [NEW - was missing]
+
+# --- Google sign-in (optional feature) -------------------------------------
+authlib>=1.3.0
+httpx>=0.25.0              # HTTP client used by Authlib's Starlette integration  [NEW - was missing]
+cryptography>=42.0         # needed by Authlib to verify Google's signed ID token  [NEW - was missing]
+
+# --- AI features (optional) ------------------------------------------------
+anthropic>=0.40.0
+
+# --- Tests -----------------------------------------------------------------
+pytest>=8.0
+pytest-cov>=5.0

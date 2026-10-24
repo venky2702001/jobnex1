@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Jobs – JOBNEX</title>
+  <meta name="description" content="Discover, filter, and queue verified job applications. Evaluate role match scores based on your candidate skills.">
+  <link rel="stylesheet" href="common.css">
+</head>
+<body data-page="jobs">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main" class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header-text">
+        <h1>Find Jobs</h1>
+        <p>Explore curated job opportunities, review calculated match scores, and queue applications.</p>
+      </div>
+      <div class="page-actions">
+        <a href="applications.html" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Tracked Applications
+        </a>
+      </div>
+    </div>
+
+    <!-- Callout Banner -->
+    <div class="callout callout-demo" role="note">
+      <span class="callout-icon">ℹ️</span>
+      <div>
+        <strong>Local Demo Listings:</strong> Listings are served from the local backend catalog. Clicking <em>Queue Application</em> records your submission into the candidate database without sending unsolicited external emails.
+      </div>
+    </div>
+
+    <!-- Collapsible Resume Context Card -->
+    <details class="card" style="margin-bottom: 20px;">
+      <summary style="font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+        <span>Application Resume Context (Click to review/edit)</span>
+        <span class="badge badge-neutral">Submission Profile</span>
+      </summary>
+      <div style="margin-top: 14px;">
+        <p class="text-sm text-muted">This text is sent to the backend when queuing applications from this page to evaluate role compatibility.</p>
+        <textarea id="application-resume" rows="3" style="min-height: 80px;">Python developer with experience in SQL, React, FastAPI, and Docker.</textarea>
+      </div>
+    </details>
+
+    <!-- Search & Filter Card -->
+    <form id="job-search-form" class="card" novalidate>
+      <div class="job-search-bar">
+        <div>
+          <label for="job-keywords" class="visually-hidden">Search jobs</label>
+          <input
+            type="search"
+            id="job-keywords"
+            name="keywords"
+            list="job-suggestions"
+            placeholder="Search by title, technology, or company (e.g. Python Developer, React, AWS)…"
+            autocomplete="off"
+          >
+        </div>
+        <button type="submit" id="search-button" class="btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search Jobs
+        </button>
+        <button type="reset" id="clear-search" class="btn btn-outline">
+          Reset
+        </button>
+      </div>
+
+      <datalist id="job-suggestions">
+        <option value="Python Developer">
+        <option value="Frontend Developer">
+        <option value="Data Analyst">
+        <option value="DevOps Engineer">
+        <option value="Django Developer">
+        <option value="Java Developer">
+      </datalist>
+
+      <!-- Quick Search Chips -->
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+        <span class="text-xs text-muted" style="font-weight: 600;">POPULAR:</span>
+        <button type="button" class="chip" data-q="Python Developer">Python Developer</button>
+        <button type="button" class="chip" data-q="Frontend Developer">Frontend Developer</button>
+        <button type="button" class="chip" data-q="Data Analyst">Data Analyst</button>
+        <button type="button" class="chip" data-q="DevOps Engineer">DevOps</button>
+        <button type="button" class="chip" data-q="Django Developer">Django</button>
+      </div>
+
+      <!-- Filters Row -->
+      <div class="filters-bar">
+        <div>
+          <label for="filter-experience">Experience Level</label>
+          <select id="filter-experience" name="experience">
+            <option value="any">All Experience Levels</option>
+            <option value="fresher">Fresher (0–1 yrs)</option>
+            <option value="junior">Junior (1–3 yrs)</option>
+            <option value="mid">Mid-level (3–6 yrs)</option>
+            <option value="senior">Senior (6+ yrs)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-region">Location / Region</label>
+          <select id="filter-region" name="region">
+            <option value="global">All Locations (Global)</option>
+            <option value="india">India (All)</option>
+            <option value="bengaluru">Bengaluru, India</option>
+            <option value="usa">United States</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-cert">Certification Requirement</label>
+          <select id="filter-cert" name="certification">
+            <option value="any">Any Certification</option>
+            <option value="aws">AWS Certified</option>
+            <option value="azure">Microsoft Azure</option>
+            <option value="gcp">Google Cloud (GCP)</option>
+            <option value="pmp">PMP</option>
+            <option value="scrum">Scrum Master</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="sort-jobs">Sort Results</label>
+          <select id="sort-jobs" name="sort">
+            <option value="match">Highest Match Score</option>
+            <option value="company">Company Name (A–Z)</option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <!-- Results Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+      <p id="result-count" role="status" class="text-sm text-muted" style="font-weight: 500; margin: 0;"></p>
+    </div>
+
+    <!-- Job Cards Grid -->
+    <div id="job-results" class="grid-auto" aria-live="polite">
+      <!-- Injected by common.js -->
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="api.js"></script>
+  <script src="common.js"></script>
+</body>
+</html>

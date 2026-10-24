@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Pipeline & Referrals – JOBNEX</title>
+  <meta name="description" content="Manage your candidate application lifecycle. Track milestones via Table and Kanban views, and generate professional recruiter referral drafts.">
+  <link rel="stylesheet" href="common.css">
+</head>
+<body data-page="applications">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main" class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header-text">
+        <h1>Applications & Referrals</h1>
+        <p>Monitor your active candidacies across the hiring lifecycle and draft tailored recruiter referral requests.</p>
+      </div>
+      <div class="page-actions">
+        <a href="jobs.html" class="btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Find More Jobs
+        </a>
+      </div>
+    </div>
+
+    <!-- Callout Banner -->
+    <div class="callout callout-demo" role="note">
+      <span class="callout-icon">ℹ️</span>
+      <div>
+        <strong>Application Pipeline Storage:</strong> Submissions are synced with the local FastAPI backend database. Status updates are stored persistently in your local session.
+      </div>
+    </div>
+
+    <!-- Pipeline Mini KPIs -->
+    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 24px;">
+      <div class="kpi-card" style="padding: 16px 20px;">
+        <span class="kpi-label">TOTAL TRACKED</span>
+        <div class="kpi-value" id="app-kpi-total" style="font-size: 1.6rem;">0</div>
+      </div>
+      <div class="kpi-card" style="padding: 16px 20px;">
+        <span class="kpi-label">APPLIED / QUEUED</span>
+        <div class="kpi-value" id="app-kpi-applied" style="font-size: 1.6rem; color: #2563EB;">0</div>
+      </div>
+      <div class="kpi-card" style="padding: 16px 20px;">
+        <span class="kpi-label">IN INTERVIEWS</span>
+        <div class="kpi-value" id="app-kpi-interview" style="font-size: 1.6rem; color: #B45309;">0</div>
+      </div>
+      <div class="kpi-card" style="padding: 16px 20px;">
+        <span class="kpi-label">OFFERS</span>
+        <div class="kpi-value" id="app-kpi-offer" style="font-size: 1.6rem; color: #15803D;">0</div>
+      </div>
+    </div>
+
+    <!-- Applications Table & Kanban Container -->
+    <section class="card" aria-labelledby="apps-heading">
+      <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h2 id="apps-heading">Candidate Application Pipeline</h2>
+          <p class="text-sm text-muted" style="margin: 0;">Update stages, track progress, or archive records.</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <div style="display: inline-flex; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden;">
+            <button type="button" class="btn btn-secondary btn-sm" id="view-table-btn" style="border-radius: 0; box-shadow: none;">
+              ☰ Table View
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="view-kanban-btn" style="border-radius: 0; box-shadow: none;">
+              ▦ Kanban Board
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter / Search Row -->
+      <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;">
+        <div style="flex: 1; min-width: 200px;">
+          <input
+            type="search"
+            id="search-applications"
+            placeholder="Filter by company or role…"
+            style="min-height: 38px;"
+          >
+        </div>
+        <div style="min-width: 160px;">
+          <select id="filter-app-status" style="min-height: 38px;">
+            <option value="all">All Statuses</option>
+            <option value="applied">Applied</option>
+            <option value="interview">Interview</option>
+            <option value="offer">Offer</option>
+            <option value="rejected">Rejected</option>
+            <option value="withdrawn">Withdrawn</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table View -->
+      <div id="table-view-wrap" class="table-responsive">
+        <table>
+          <caption class="visually-hidden">Tracked job applications</caption>
+          <thead>
+            <tr>
+              <th scope="col">Company</th>
+              <th scope="col">Position / Role</th>
+              <th scope="col">Date Applied</th>
+              <th scope="col">Current Status</th>
+              <th scope="col">Stage Transition</th>
+              <th scope="col" style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="apps-body">
+            <!-- Injected by common.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Kanban View (Hidden by default) -->
+      <div id="kanban-view-wrap" hidden>
+        <div id="apps-kanban" class="kanban-board">
+          <!-- Injected by common.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Referral Email Generator Section -->
+    <section class="card" id="referral" aria-labelledby="ref-heading">
+      <div class="card-header">
+        <div>
+          <h2 id="ref-heading">Recruiter Referral Email Generator</h2>
+          <p class="text-sm text-muted" style="margin: 0;">Compose an outreach email draft tailored to a specific opening.</p>
+        </div>
+        <span class="badge badge-primary">Outreach Tool</span>
+      </div>
+
+      <div class="callout callout-info" style="margin-bottom: 20px;">
+        <span class="callout-icon">ℹ️</span>
+        <div>
+          <strong>Draft Only:</strong> This utility generates a polite, professional message draft. JOBNEX never sends external emails automatically without your manual review and dispatch from your own email account.
+        </div>
+      </div>
+
+      <form id="referral-form" novalidate>
+        <div style="margin-bottom: 16px;">
+          <label for="ref-app">Auto-fill from an active application (Optional)</label>
+          <select id="ref-app">
+            <option value="">Choose an existing application to auto-fill…</option>
+          </select>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label for="recruiter-name">Recruiter or Contact Name</label>
+            <input type="text" id="recruiter-name" placeholder="e.g. Sarah Jenkins" autocomplete="off">
+          </div>
+          <div>
+            <label for="your-name">Your Full Name</label>
+            <input type="text" id="your-name" placeholder="e.g. Parameshachari G" autocomplete="name">
+          </div>
+          <div>
+            <label for="company-name">Target Company Name *</label>
+            <input type="text" id="company-name" placeholder="e.g. Brightpath Systems" required aria-describedby="company-name-error">
+            <p class="field-error" id="company-name-error"></p>
+          </div>
+          <div>
+            <label for="job-role">Target Job Role *</label>
+            <input type="text" id="job-role" placeholder="e.g. Python Developer" required aria-describedby="job-role-error">
+            <p class="field-error" id="job-role-error"></p>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <label for="your-background">Your Relevant Background (1–2 sentences)</label>
+          <textarea
+            id="your-background"
+            rows="2"
+            style="min-height: 70px;"
+            placeholder="e.g. My background includes building backend APIs with Python, FastAPI, and Docker, with a strong focus on relational database performance."
+          ></textarea>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <button type="submit" id="generate-referral" class="btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Generate Referral Draft
+          </button>
+        </div>
+      </form>
+
+      <!-- Referral Output Preview Box -->
+      <div id="referral-output" class="referral-draft-box" hidden>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+          <h3 style="font-size: 1rem; margin: 0;">Generated Email Draft</h3>
+          <button type="button" class="btn btn-secondary btn-sm" id="copy-referral">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy Draft to Clipboard
+          </button>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <label for="ref-subject" class="text-xs text-muted" style="text-transform: uppercase;">Subject Line</label>
+          <input type="text" id="ref-subject" style="font-weight: 600;">
+        </div>
+
+        <div>
+          <label for="ref-body" class="text-xs text-muted" style="text-transform: uppercase;">Email Body (Editable)</label>
+          <textarea id="ref-body" rows="9" style="min-height: 200px; font-family: inherit; font-size: 0.9375rem; line-height: 1.6;"></textarea>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="api.js"></script>
+  <script src="common.js"></script>
+</body>
+</html>

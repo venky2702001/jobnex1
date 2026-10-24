@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOBNEX – Career Intelligence Platform</title>
+  <meta http-equiv="refresh" content="0; url=login.html">
+  <link rel="stylesheet" href="common.css">
+</head>
+<body data-page="index">
+  <main class="container text-center" style="padding-top: 100px;">
+    <span class="spinner" style="width: 32px; height: 32px;"></span>
+    <p class="text-muted" style="margin-top: 16px;">Loading JOBNEX…</p>
+    <p><a href="login.html" class="btn btn-secondary">Click here if not redirected</a></p>
+  </main>
+  <script>
+    try {
+      const session = sessionStorage.getItem('jobnex.session') || localStorage.getItem('jobnex.session');
+      if (session) {
+        location.replace('dashboard.html');
+      } else {
+        location.replace('login.html');
+      }
+    } catch(e) {
+      location.replace('login.html');
+    }
+  </script>
+</body>
+</html>

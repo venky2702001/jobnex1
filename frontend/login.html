@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In – JOBNEX Career Platform</title>
+  <meta name="description" content="Sign in to JOBNEX to analyze resumes, track career applications, find jobs, and prepare for interviews.">
+  <link rel="stylesheet" href="common.css">
+</head>
+<body data-page="login" class="auth-page">
+
+  <main class="auth-container" id="main">
+    <!-- Left Hero Showcase Panel -->
+    <section class="auth-hero-panel" aria-label="Product Showcase">
+      <div class="auth-brand">
+        <a class="brand-logo" href="dashboard.html" style="font-size: 1.4rem;">
+          <span class="brand-mark">J</span>
+          <span>JOB<span class="brand-text-green">NEX</span></span>
+        </a>
+      </div>
+
+      <div class="auth-hero-content">
+        <h2>Intelligent career management for ambitious professionals.</h2>
+        <p>Accelerate your hiring journey with semantic resume scoring, organized application tracking, and tailored interview prep.</p>
+
+        <ul class="auth-feature-list">
+          <li class="auth-feature-item">
+            <span class="auth-feature-icon">✓</span>
+            <span>Resume-to-Job matching with keyword gap analysis</span>
+          </li>
+          <li class="auth-feature-item">
+            <span class="auth-feature-icon">✓</span>
+            <span>Comprehensive application pipeline & Kanban tracking</span>
+          </li>
+          <li class="auth-feature-item">
+            <span class="auth-feature-icon">✓</span>
+            <span>Structured technical, behavioral, & system design prep</span>
+          </li>
+          <li class="auth-feature-item">
+            <span class="auth-feature-icon">✓</span>
+            <span>Instant professional referral email generator</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="text-sm text-muted">
+        Trusted by job seekers across engineering, analytics, & cloud disciplines.
+      </div>
+    </section>
+
+    <!-- Right Login Form Panel with Interactive Animated Icon -->
+    <section class="auth-card-panel" id="auth-card-panel" aria-labelledby="auth-title">
+      
+      <!-- Interactive Brand Icon Section -->
+      <div class="login-brand-interactive" id="login-brand-interactive" role="button" tabindex="0" title="Click to animate JobNex icon">
+        <div class="jobnex-icon-wrap" id="jobnex-icon-wrap">
+          <div class="jobnex-glow-ring"></div>
+          <div class="jobnex-hero-icon" id="jobnex-hero-icon">
+            <svg width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="jnexGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#9333EA"/>
+                  <stop offset="50%" stop-color="#7C3AED"/>
+                  <stop offset="100%" stop-color="#4F46E5"/>
+                </linearGradient>
+                <filter id="whiteGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.4"/>
+                </filter>
+              </defs>
+              <rect width="64" height="64" rx="18" fill="url(#jnexGrad)"/>
+              <rect x="2" y="2" width="60" height="60" rx="16" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+              <path d="M22 16H38V22H32V38C32 42.4183 28.4183 46 24 46C19.5817 46 16 42.4183 16 38H22C22 39.1046 22.8954 40 24 40C25.1046 40 26 39.1046 26 38V16H22Z" fill="#FFFFFF" filter="url(#whiteGlow)"/>
+              <path d="M46 18L49 25L56 28L49 31L46 38L43 31L36 28L43 25L46 18Z" fill="#FFFFFF"/>
+              <circle cx="46" cy="28" r="2.5" fill="#DDD6FE"/>
+              <path d="M35 37L48 44M48 44L40 45M48 44L46 36" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="jobnex-brand-title">
+            <span>JOB<span class="jobnex-title-accent">NEX</span></span>
+          </div>
+          <div class="jobnex-click-prompt" id="jobnex-click-prompt">
+            <span id="prompt-text">✨ Click icon to Sign In: Icon goes UP ⬆ Details reveal DOWN ⬇ ✨</span>
+            <svg class="chevron-bounce" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details Container (Animated Down Below Icon) -->
+      <div class="login-details-container" id="login-details-container">
+        <div class="auth-card-header">
+          <h1 id="auth-title">Sign In</h1>
+          <p id="auth-subtitle">Enter your credentials to access your career command center.</p>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div id="register-name-wrap" style="margin-bottom: 16px;" hidden>
+            <label for="register-name">Full Name <span class="text-muted">(optional)</span></label>
+            <input type="text" id="register-name" name="name" placeholder="Your name" autocomplete="name" maxlength="100">
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label for="login-email">Email Address</label>
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              placeholder="candidate@example.com"
+              autocomplete="email"
+              required
+              aria-describedby="login-email-error"
+            >
+            <p class="field-error" id="login-email-error"></p>
+          </div>
+
+          <div style="margin-bottom: 8px;">
+            <label for="login-password">Password</label>
+            <div class="input-password-wrap">
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                autocomplete="current-password"
+                minlength="8"
+                required
+                aria-describedby="login-password-error"
+              >
+              <button type="button" class="password-toggle-btn" id="password-toggle-btn" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <p class="field-error" id="login-password-error"></p>
+          </div>
+
+          <div class="auth-options">
+            <label class="check-label" for="remember-me">
+              <input type="checkbox" id="remember-me" name="remember" checked>
+              <span>Remember me</span>
+            </label>
+            <a href="#" id="forgot-password">Forgot Password?</a>
+          </div>
+
+          <p id="login-feedback" role="status" style="font-size: 0.875rem; margin-bottom: 12px;"></p>
+
+          <button type="submit" id="login-button" class="btn btn-lg" style="width: 100%;">
+            Sign In to JOBNEX
+          </button>
+        </form>
+
+        <div class="auth-divider">
+          <span>or</span>
+        </div>
+
+        <button type="button" id="google-login" class="btn btn-secondary" style="width: 100%; margin-bottom: 12px;">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.35 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+          Sign in with Google
+        </button>
+
+        <button type="button" id="auth-mode-toggle" class="btn btn-outline btn-sm" style="width: 100%;">
+          New here? Create an account
+        </button>
+
+        <div style="text-align: center; margin-top: 16px;">
+          <button type="button" id="toggle-animation-btn" class="btn btn-ghost btn-sm" style="color: var(--brand-purple);">
+            ↺ Toggle / Replay Icon Animation
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="api.js"></script>
+  <script src="common.js"></script>
+</body>
+</html>

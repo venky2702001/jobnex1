@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Analyzer – JOBNEX</title>
+  <meta name="description" content="Evaluate resume fit against target job descriptions. Extract keyword coverage, identify skill gaps, and receive actionable suggestions.">
+  <link rel="stylesheet" href="common.css">
+</head>
+<body data-page="analyzer">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main" class="container">
+    <!-- Header -->
+    <div class="page-header">
+      <div class="page-header-text">
+        <h1>Resume Analyzer</h1>
+        <p>Compare your professional profile against target job descriptions to identify coverage and gaps.</p>
+      </div>
+      <div class="page-actions">
+        <a href="courses.html" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          View Recommended Courses
+        </a>
+      </div>
+    </div>
+
+    <!-- Callout Banner -->
+    <div class="callout callout-demo" role="note">
+      <span class="callout-icon">ℹ️</span>
+      <div>
+        <strong>Backend Semantic Analyzer:</strong> Submitting evaluates text against the FastAPI <code>/api/analyze</code> endpoint. Past analyses and missing competencies are recorded for subsequent course recommendations.
+      </div>
+    </div>
+
+    <!-- Input Form -->
+    <form id="analyze-form" novalidate>
+      <div class="grid-2">
+        <!-- Resume Input Card -->
+        <section class="card" aria-label="Resume Document Input">
+          <div class="card-header">
+            <h3>Candidate Resume</h3>
+            <span class="badge badge-neutral">Input</span>
+          </div>
+
+          <!-- File Dropzone -->
+          <div class="dropzone" id="resume-dropzone" tabindex="0" role="button" aria-label="Click or drag file to upload resume">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <div style="font-weight: 600; margin-bottom: 2px;">Click to upload or drag & drop</div>
+            <div class="text-sm text-muted">Plain-text (.txt) resumes up to 5MB, or paste your resume text below</div>
+            <input type="file" id="resume-file-upload" accept=".txt,text/plain" style="display: none;">
+          </div>
+
+          <div id="file-name-pill" class="file-pill" hidden></div>
+
+          <div style="margin-top: 14px;">
+            <label for="resume_text">Or paste resume plain text</label>
+            <textarea
+              id="resume_text"
+              name="resume_text"
+              placeholder="Paste your complete resume text including work history, technologies, education, and achievements…"
+              required
+              aria-describedby="resume_text-error"
+            >Python developer with 3+ years experience in SQL, React, FastAPI, Docker, and REST APIs. Skilled in database design, automated testing, and cloud deployments on AWS.</textarea>
+            <p class="field-error" id="resume_text-error"></p>
+          </div>
+        </section>
+
+        <!-- Job Description Input Card -->
+        <section class="card" aria-label="Job Description Input">
+          <div class="card-header">
+            <h3>Target Job Description</h3>
+            <span class="badge badge-neutral">Specification</span>
+          </div>
+
+          <!-- Quick Sample JD Chips -->
+          <div>
+            <label>Quick Sample Roles</label>
+            <div class="sample-jd-bar">
+              <button type="button" class="sample-jd-btn" data-sample-jd="python">Python Backend</button>
+              <button type="button" class="sample-jd-btn" data-sample-jd="frontend">React Frontend</button>
+              <button type="button" class="sample-jd-btn" data-sample-jd="data">Data Analyst</button>
+              <button type="button" class="sample-jd-btn" data-sample-jd="devops">DevOps Cloud</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="jd_text">Job Description Content</label>
+            <textarea
+              id="jd_text"
+              name="jd_text"
+              placeholder="Paste the complete job description, required qualifications, and desired skills here…"
+              required
+              aria-describedby="jd_text-error"
+            >We are hiring a Python Backend Engineer with 3+ years experience.
+Must have strong proficiency with Python, FastAPI, Docker, and PostgreSQL.
+Experience with AWS infrastructure, CI/CD pipelines, and microservices is highly desired.</textarea>
+            <p class="field-error" id="jd_text-error"></p>
+          </div>
+        </section>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; flex-wrap: wrap; gap: 12px;">
+        <p id="status" role="status" class="text-sm text-muted" style="margin: 0;"></p>
+        <button type="submit" id="analyze-button" class="btn btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Analyze Resume
+        </button>
+      </div>
+    </form>
+
+    <!-- Analysis Results Section (Structured Report) -->
+    <section id="results" class="card" aria-labelledby="report-heading" style="margin-top: 32px;" hidden>
+      <div class="card-header">
+        <div>
+          <h2 id="report-heading">Analysis Report</h2>
+          <p class="text-sm text-muted" style="margin: 0;">Evaluation results generated against the provided job description.</p>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Report
+        </button>
+      </div>
+
+      <!-- Report Hero (Score & Fit Summary) -->
+      <div class="report-hero">
+        <div class="score-gauge-card">
+          <div class="score-number" id="report-score-number">--%</div>
+          <div class="score-label" id="report-score-label">MATCH SCORE</div>
+        </div>
+        <div class="report-summary-text">
+          <h3>Resume Alignment Overview</h3>
+          <p>This match score evaluates how closely the keywords, technical frameworks, and role responsibilities in your resume correlate with the requirements outlined in the job specification.</p>
+        </div>
+      </div>
+
+      <!-- Two-Column Breakdown: Matched vs Missing Skills -->
+      <div class="grid-2" style="margin-bottom: 24px;">
+        <!-- Matched Skills -->
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1rem; margin-bottom: 12px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Matched Competencies
+          </h3>
+          <div class="skills-cloud" id="report-matched-skills">
+            <!-- Injected by common.js -->
+          </div>
+        </div>
+
+        <!-- Missing Skills -->
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 8px; font-size: 1rem; margin-bottom: 12px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Missing / Unmatched Keywords
+          </h3>
+          <div class="skills-cloud" id="report-missing-skills">
+            <!-- Injected by common.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Actionable Suggestions -->
+      <div>
+        <h3 style="font-size: 1rem; margin-bottom: 12px;">Actionable Recommendations</h3>
+        <div id="report-suggestions-list">
+          <!-- Injected by common.js -->
+        </div>
+      </div>
+
+      <!-- Next Steps Actions -->
+      <div style="display: flex; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
+        <a href="courses.html" class="btn btn-secondary">
+          Bridge Missing Skills via Courses &rarr;
+        </a>
+        <a href="jobs.html" class="btn btn-outline">
+          Find Matching Jobs
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script src="api.js"></script>
+  <script src="common.js"></script>
+</body>
+</html>
